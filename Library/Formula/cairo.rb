@@ -16,8 +16,6 @@ class Cairo < Formula
     sha1 "a854c7d9c3cb0736ae09512384dc943425a29b43" => :lion
   end
 
-  keg_only :provided_pre_mountain_lion
-
   option :universal
   option 'without-x', 'Build without X11 support'
 

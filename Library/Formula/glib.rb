@@ -23,6 +23,7 @@ class Glib < Formula
     build 2334
     cause "Undefined symbol errors while linking"
   end
+<<<<<<< HEAD
 
   resource 'config.h.ed' do
     url 'https://trac.macports.org/export/111532/trunk/dports/devel/glib2/files/config.h.ed'
@@ -53,19 +54,23 @@ class Glib < Formula
 
   def install
     ENV.universal_binary if build.universal?
+=======
+  def install
+    # -w is said to causes gcc to emit spurious errors for this package
+    ENV.enable_warnings if ENV.compiler == :gcc
+>>>>>>> Prototype changes to support cairo/pango install.
 
     # Disable dtrace; see https://trac.macports.org/ticket/30413
     args = %W[
       --disable-maintainer-mode
       --disable-dependency-tracking
       --disable-silent-rules
-      --disable-dtrace
-      --disable-libelf
       --prefix=#{prefix}
       --localstatedir=#{var}
       --with-gio-module-dir=#{HOMEBREW_PREFIX}/lib/gio/modules
     ]
 
+<<<<<<< HEAD
     args << '--enable-static' if build.with? 'static'
 
     system "./configure", *args
@@ -82,13 +87,15 @@ class Glib < Formula
 
     # `pkg-config --libs glib-2.0` includes -lintl, and gettext itself does not
     # have a pkgconfig file, so we add gettext lib and include paths here.
-    gettext = Formula["gettext"].opt_prefix
-    inreplace lib+'pkgconfig/glib-2.0.pc' do |s|
-      s.gsub! 'Libs: -L${libdir} -lglib-2.0 -lintl',
-              "Libs: -L${libdir} -lglib-2.0 -L#{gettext}/lib -lintl"
-      s.gsub! 'Cflags: -I${includedir}/glib-2.0 -I${libdir}/glib-2.0/include',
-              "Cflags: -I${includedir}/glib-2.0 -I${libdir}/glib-2.0/include -I#{gettext}/include"
-    end
+    # -lintl not required.
+    #
+    #gettext = Formula["gettext"].opt_prefix
+    #inreplace lib+'pkgconfig/glib-2.0.pc' do |s|
+      #s.gsub! 'Libs: -L${libdir} -lglib-2.0 -lintl',
+              #"Libs: -L${libdir} -lglib-2.0 -L#{gettext}/lib -lintl"
+      #s.gsub! 'Cflags: -I${includedir}/glib-2.0 -I${libdir}/glib-2.0/include',
+              #"Cflags: -I${includedir}/glib-2.0 -I${libdir}/glib-2.0/include -I#{gettext}/include"
+    #end
 
     (share+'gtk-doc').rmtree
   end

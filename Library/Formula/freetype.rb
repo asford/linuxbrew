@@ -14,8 +14,6 @@ class Freetype < Formula
     sha1 "df246259dde3352bac99dc08af757604c06a2e09" => :lion
   end
 
-  keg_only :provided_pre_mountain_lion
-
   option :universal
   option 'without-subpixel', "Disable sub-pixel rendering (a.k.a. LCD rendering, or ClearType)"
 

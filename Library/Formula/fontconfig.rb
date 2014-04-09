@@ -12,8 +12,6 @@ class Fontconfig < Formula
     sha1 '7fc50a2d18fd503769aa70fd3811a12f5e8b03bf' => :lion
   end
 
-  keg_only :provided_pre_mountain_lion
-
   option :universal
 
   depends_on :freetype
@@ -23,10 +21,10 @@ class Fontconfig < Formula
     ENV.universal_binary if build.universal?
     system "./configure", "--disable-dependency-tracking",
                           "--disable-silent-rules",
-                          "--with-add-fonts=/System/Library/Fonts,/Library/Fonts,~/Library/Fonts",
                           "--prefix=#{prefix}",
                           "--localstatedir=#{var}",
                           "--sysconfdir=#{etc}"
+                          "--disable-docs"
     system "make install"
   end
 
